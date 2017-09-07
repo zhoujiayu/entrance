@@ -1,0 +1,58 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/data/mongo
+http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd
+http://www.springframework.org/schema/data/jpa
+http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+">
+
+	<context:component-scan base-package="com.statistics.dao,com.statistics.service" />
+	<!-- <bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:mango.properties</value>
+		</property>
+	</bean> -->
+	<!-- <mongo:mongo id="mongo" replica-set="${mongo.replicaSet}"> -->
+	<!-- connections-per-host: 每个主机答应的连接数（每个主机的连接池大小），当连接池被用光时，会被阻塞住 max-wait-time: 
+		被阻塞线程从连接池获取连接的最长等待时间（ms） connect-timeout:在建立（打开）套接字连接时的超时时间（ms） socket-timeout:套接字超时时间;该值会被传递给Socket.setSoTimeout(int) 
+		slave-ok:指明是否答应驱动从次要节点或者奴隶节点读取数据 -->
+
+
+	<!-- <mongo:options connections-per-host="${mongo.connectionsPerHost}" threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}" 
+		connect-timeout="${mongo.connectTimeout}" max-wait-time="${mongo.maxWaitTime}" 
+		auto-connect-retry="${mongo.autoConnectRetry}" socket-keep-alive="${mongo.socketKeepAlive}" 
+		socket-timeout="${mongo.socketTimeout}" slave-ok="${mongo.slaveOk}" write-number="${mongo.writeNumber}" 
+		write-timeout="${mongo.riteTimeout}" write-fsync="${mongo.writeFsync}"/> 
+		</mongo:mongo> -->
+	<!-- <mongo:mongo-client id="mongo" replica-set="xxx.xx.x.xx:27017,xxx.xx.x.xx::27017" 
+		credentials="admin:abc_123@xyz"> <mongo:client-options write-concern="NONE" 
+		connections-per-host="10" connect-timeout="30000" max-wait-time="10000" /> 
+		</mongo:mongo-client> -->
+	<!-- <mongo:mongo-client id="mongo" host="127.0.0.1" port="27017" credentials="liutest:liutest@col"> 
+		<mongo:client-options write-concern="NORMAL" connections-per-host="800" connect-timeout="30000" 
+		max-wait-time="10000" /> </mongo:mongo-client> -->
+	<mongo:mongo-client id="mongo" replica-set="172.16.2.38:20000">
+		<mongo:client-options write-concern="NORMAL"
+			connections-per-host="800" connect-timeout="1500"
+			max-wait-time="1500" />
+	</mongo:mongo-client>
+
+	<!-- 设置使用的数据库 名 -->
+	<!-- <mongo:db-factory dbname="test" mongo-ref="mongo"/> -->
+	<!-- mongodb的模板 -->
+	<!-- <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"> 
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/> </bean> -->
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongo" />
+		<constructor-arg name="databaseName" value="userLog" />
+	</bean>
+
+</beans>

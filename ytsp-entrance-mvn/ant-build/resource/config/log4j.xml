@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd"> 
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%p] %d{yyyy-MM-dd HH:mm:ss} %m%n" />
+		</layout>
+	</appender -->
+
+	<appender name="FILE"
+		class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="../logs/entrance.log" />
+		<param name="Append" value="true" />
+		<param name="ImmediateFlush" value="true" />
+		<param name="MaxFileSize" value="1000KB" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] %d{yyyy-MM-dd HH:mm:ss} %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelMatchFilter">
+			<param name="LevelToMatch" value="ERROR" />
+		</filter>
+	</appender>
+
+	<root>
+		<level value="ERROR" />
+		<!-- level value="INFO" / -->
+		<!-- appender-ref ref="CONSOLE" / -->
+		<appender-ref ref="FILE" />
+	</root>
+
+</log4j:configuration>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<balance-net>
+	<!-- jmxProtocol="jmxmp" -->
+	<node jmxHost="114.112.50.220" jmxPort="10001" jmxProtocol="rmi" jmxObjectName="ytsp.jmx:name=mirrorBalanceService,type=Service">
+		<data>
+			<prop key="service" value="http://videoa.ikan.cn/" />
+		</data>
+	</node>
+</balance-net> 

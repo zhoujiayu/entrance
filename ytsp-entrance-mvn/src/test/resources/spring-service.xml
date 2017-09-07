@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+            http://www.springframework.org/schema/context    
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd   
+            http://www.springframework.org/schema/aop    
+            http://www.springframework.org/schema/aop/spring-aop-3.0.xsd   
+            http://www.springframework.org/schema/tx    
+            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd   
+            http://www.springframework.org/schema/mvc    
+            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd ">
+
+	<!-- 默认扫描所有注解 -->
+	<context:component-scan base-package="com.ytsp.entrance" />
+
+	<bean id="videoService" class="com.ytsp.entrance.service.VideoService"
+		scope="singleton">
+		<property name="albumDao">
+			<ref bean="albumDao" />
+		</property>
+		<property name="videoDao">
+			<ref bean="videoDao" />
+		</property>
+		<property name="monthlyDao">
+			<ref bean="monthlyDao" />
+		</property>
+		<property name="logVideoDao">
+			<ref bean="logVideoDaoYTSPLOG" />
+		</property>
+	</bean>
+
+	<bean id="favoritesService" class="com.ytsp.entrance.service.FavoritesService"
+		scope="singleton">
+		<property name="favoritesDao">
+			<ref bean="favoritesDao" />
+		</property>
+	</bean>
+
+	<bean id="recommendService" class="com.ytsp.entrance.service.RecommendService"
+		scope="singleton">
+		<property name="recommendDao">
+			<ref bean="recommendDao" />
+		</property>
+	</bean>
+
+	<bean id="albumService" class="com.ytsp.entrance.service.AlbumService"
+		scope="singleton">
+		<property name="albumDao">
+			<ref bean="albumDao" />
+		</property>
+	</bean>
+
+	<bean id="albumServiceV3" class="com.ytsp.entrance.service.v3_0.AlbumServiceV3"
+		scope="singleton">
+		<property name="albumDao">
+			<ref bean="albumDao" />
+		</property>
+	</bean>
+
+	<bean id="channelService" class="com.ytsp.entrance.service.ChannelService"
+		scope="singleton">
+		<property name="channelDao">
+			<ref bean="channelDao" />
+		</property>
+	</bean>
+
+	<bean id="voiceService" class="com.ytsp.entrance.service.v3_0.VoiceService"
+		scope="singleton">
+		<property name="voiceDao">
+			<ref bean="voiceDao" />
+		</property>
+	</bean>
+
+	<bean id="channelServiceV3" class="com.ytsp.entrance.service.v3_0.ChannelServiceV3"
+		scope="singleton">
+		<property name="channelDao">
+			<ref bean="channelDao" />
+		</property>
+	</bean>
+
+	<bean id="customerService" class="com.ytsp.entrance.service.CustomerService"
+		scope="singleton">
+		<property name="customerDao">
+			<ref bean="customerDao" />
+		</property>
+		<property name="parentDao">
+			<ref bean="parentDao" />
+		</property>
+		<property name="babyDao">
+			<ref bean="babyDao" />
+		</property>
+		<property name="commonRegionDao">
+			<ref bean="commonRegionDao" />
+		</property>
+		<property name="customerThirdPlatformDao">
+			<ref bean="customerThirdPlatformDao" />
+		</property>
+		<property name="forgetPasswordCodeDao">
+			<ref bean="forgetPasswordCodeDao" />
+		</property>
+		<property name="customerMemberDao">
+			<ref bean="customerMemberDao" />
+		</property>
+	</bean>
+
+	<bean id="parentControlService" class="com.ytsp.entrance.service.ParentControlService"
+		scope="singleton">
+		<property name="parentControlDao">
+			<ref bean="parentControlDao" />
+		</property>
+		<property name="parentTimeControlDao">
+			<ref bean="parentTimeControlDao" />
+		</property>
+	</bean>
+
+
+	<bean id="questionsService" class="com.ytsp.entrance.service.QuestionsService"
+		scope="singleton">
+		<property name="questionsDao">
+			<ref bean="questionsDao" />
+		</property>
+	</bean>
+
+	<bean id="questionsV3Service" class="com.ytsp.entrance.service.v3_0.QuestionsServiceV3"
+		scope="singleton">
+		<property name="questionsDao">
+			<ref bean="questionsDao" />
+		</property>
+	</bean>
+
+	<bean id="rechargeHistoryService" class="com.ytsp.entrance.service.RechargeHistoryService"
+		scope="singleton">
+		<property name="rechargeHistoryDao">
+			<ref bean="rechargeHistoryDao" />
+		</property>
+		<property name="monthlyDao">
+			<ref bean="monthlyDao" />
+		</property>
+		<property name="hardwareRegisterDao">
+			<ref bean="hardwareRegisterDao" />
+		</property>
+	</bean>
+
+	<bean id="systemParamService" class="com.ytsp.entrance.service.SystemParamService"
+		scope="singleton">
+		<property name="systemParamDao">
+			<ref bean="systemParamDao" />
+		</property>
+	</bean>
+	<bean id="activityService" class="com.ytsp.entrance.service.v3_0.ActivityService"
+		scope="singleton">
+		<property name="activityDao">
+			<ref bean="activityDao" />
+		</property>
+	</bean>
+
+	<bean id="memberServiceV31" class="com.ytsp.entrance.service.v3_1.MemberServiceV31"
+		scope="singleton">
+		<property name="adVideoDao">
+			<ref bean="adVideoDao" />
+		</property>
+		<property name="customerDao">
+			<ref bean="customerDao" />
+		</property>
+		<property name="customerMemberDao">
+			<ref bean="customerMemberDao" />
+		</property>
+		<property name="albumDao">
+			<ref bean="albumDao" />
+		</property>
+		<property name="videoDao">
+			<ref bean="videoDao" />
+		</property>
+		<property name="logVideoDao">
+			<ref bean="logVideoDaoYTSPLOG" />
+		</property>
+	</bean>
+
+	<bean id="memberService" class="com.ytsp.entrance.service.MemberService"
+		scope="singleton">
+		<property name="rechargeRecordCardDao">
+			<ref bean="rechargeRecordCardDao" />
+		</property>
+		<property name="rechargeRecordAppleDao">
+			<ref bean="rechargeRecordAppleDao" />
+		</property>
+		<property name="memberCostDefineDao">
+			<ref bean="memberCostDefineDao" />
+		</property>
+		<property name="customerDao">
+			<ref bean="customerDao" />
+		</property>
+		<property name="customerMemberDao">
+			<ref bean="customerMemberDao" />
+		</property>
+		<property name="dmsCardDao">
+			<ref bean="dmsCardDao" />
+		</property>
+		<property name="albumDao">
+			<ref bean="albumDao" />
+		</property>
+		<property name="videoDao">
+			<ref bean="videoDao" />
+		</property>
+		<property name="logVideoDao">
+			<ref bean="logVideoDaoYTSPLOG" />
+		</property>
+	</bean>
+
+
+	<!-- 电商相关 -->
+	<bean id="ebShoppingCartService" class="com.ytsp.entrance.service.EbShoppingCartService"
+		scope="singleton">
+		<property name="ebShoppingCartDao">
+			<ref bean="ebShoppingCartDao" />
+		</property>
+		<property name="ebSkuDao">
+			<ref bean="ebSkuDao" />
+		</property>
+		<property name="ebProductDao">
+			<ref bean="ebProductDao" />
+		</property>
+		<property name="ebPromotionDao">
+			<ref bean="ebPromotionDao" />
+		</property>
+		<property name="customerMemberDao">
+			<ref bean="customerMemberDao" />
+		</property>
+		<property name="ebOrderDao">
+			<ref bean="ebOrderDao" />
+		</property>
+	</bean>
+
+
+	<bean id="ebSkuService" class="com.ytsp.entrance.service.EbSkuService"
+		scope="singleton">
+		<property name="ebSkuDao">
+			<ref bean="ebSkuDao" />
+		</property>
+	</bean>
+
+
+	<bean id="ebActivityService" class="com.ytsp.entrance.service.EbActivityService"
+		scope="singleton">
+		<property name="ebActivityDao">
+			<ref bean="ebActivityDao" />
+		</property>
+	</bean>
+
+
+	<bean id="ebProductService" class="com.ytsp.entrance.service.EbProductService"
+		scope="singleton">
+		<property name="ebProductDao">
+			<ref bean="ebProductDao" />
+		</property>
+		<property name="ebActivityDao">
+			<ref bean="ebActivityDao" />
+		</property>
+		<property name="ebProductImageDao">
+			<ref bean="ebProductImageDao" />
+		</property>
+		<property name="ebSecKillDao">
+			<ref bean="ebSecKillDao" />
+		</property>
+	</bean>
+
+
+	<bean id="ebOrderService" class="com.ytsp.entrance.service.EbOrderService"
+		scope="singleton">
+		<property name="ebOrderDao">
+			<ref bean="ebOrderDao" />
+		</property>
+		<property name="ebStorageDao">
+			<ref bean="ebStorageDao" />
+		</property>
+		<property name="ebReturnOrderDao">
+			<ref bean="ebReturnOrderDao" />
+		</property>
+		<property name="ebSkuDao">
+			<ref bean="ebSkuDao" />
+		</property>
+		<property name="customerDao">
+			<ref bean="customerDao" />
+		</property>
+		<property name="ebCouponDao">
+			<ref bean="ebCouponDao" />
+		</property>
+		<property name="ebOrderDetailDao">
+			<ref bean="ebOrderDetailDao" />
+		</property>
+		<property name="ebShoppingCartDao">
+			<ref bean="ebShoppingCartDao" />
+		</property>
+		<property name="ebOrderCouponRecordDao">
+			<ref bean="ebOrderCouponRecordDao" />
+		</property>
+		<property name="ebOrderPayLogDao">
+			<ref bean="ebOrderPayLogDao" />
+		</property>
+		<property name="ebSalesDao">
+			<ref bean="ebSalesDao" />
+		</property>
+		<property name="ebPromotionDao">
+			<ref bean="ebPromotionDao" />
+		</property>
+		<property name="ebProductDao">
+			<ref bean="ebProductDao" />
+		</property>
+		<property name="customerMemberDao">
+			<ref bean="customerMemberDao" />
+		</property>
+	</bean>
+
+
+	<bean id="ebSkillOrderService" class="com.ytsp.entrance.service.EbSkillOrderService"
+		scope="singleton">
+		<property name="ebOrderDao">
+			<ref bean="ebOrderDao" />
+		</property>
+
+		<property name="secKillDao">
+			<ref bean="ebSecKillDao" />
+		</property>
+	</bean>
+	<bean id="creditService" class="com.ytsp.entrance.service.v4_0.CreditService"
+		scope="singleton">
+		<property name="creditPolicyDao">
+			<ref bean="creditPolicyDao" />
+		</property>
+		<property name="customerDao">
+			<ref bean="customerDao" />
+		</property>
+	</bean>
+	<bean id="commentService" class="com.ytsp.entrance.service.v4_0.CommentService"
+		scope="singleton">
+		<property name="ebCommentDao">
+			<ref bean="ebCommentDao" />
+		</property>
+	</bean>
+	<bean id="productDetailService" class="com.ytsp.entrance.service.v4_0.ProductDetailService"
+		scope="singleton">
+		<property name="ebProductDetailDao">
+			<ref bean="ebProductDetailDao" />
+		</property>
+	</bean>
+	<bean id="productParamService" class="com.ytsp.entrance.service.v4_0.ProductParamService"
+		scope="singleton">
+		<property name="ebProductParamDao">
+			<ref bean="ebProductParamDao" />
+		</property>
+	</bean>
+	<bean id="ebUserAddressService" class="com.ytsp.entrance.service.v4_0.EbUserAddressService"
+		scope="singleton">
+		<property name="ebUserAddressDao">
+			<ref bean="ebUserAddressDao" />
+		</property>
+	</bean>
+	<bean id="memberServiceV4_0" class="com.ytsp.entrance.service.v4_0.MemberServiceV4_0"
+		scope="singleton">
+		<property name="customerDao">
+			<ref bean="customerDao" />
+		</property>
+		<property name="customerMemberDao">
+			<ref bean="customerMemberDao" />
+		</property>
+		<property name="ebOrderDao">
+			<ref bean="ebOrderDao" />
+		</property>
+	</bean>
+
+	<bean id="feedbackService" class="com.ytsp.entrance.service.v4_0.FeedbackService"
+		scope="singleton">
+		<property name="feedbackRecordDao">
+			<ref bean="feedbackRecordDao" />
+		</property>
+		<property name="customerDao">
+			<ref bean="customerDao" />
+		</property>
+	</bean>
+	<bean id="launchAdService" class="com.ytsp.entrance.service.v4_0.LaunchAdService"
+		scope="singleton">
+		<property name="launchAdDao">
+			<ref bean="launchAdDao" />
+		</property>
+	</bean>
+	<bean id="ebSalesService" class="com.ytsp.entrance.service.v4_0.EbSalesService"
+		scope="singleton">
+		<property name="ebSalesDao">
+			<ref bean="ebSalesDao" />
+		</property>
+	</bean>
+	<bean id="ebCouponService" class="com.ytsp.entrance.service.v5_0.EbCouponService"
+		scope="singleton">
+		<property name="ebCouponDao">
+			<ref bean="ebCouponDao" />
+		</property>
+	</bean>
+	<bean id="ebPromotionService" class="com.ytsp.entrance.service.v5_0.EbPromotionService"
+		scope="singleton">
+		<property name="ebPromotionDao">
+			<ref bean="ebPromotionDao" />
+		</property>
+		<property name="ebPromotionItemDao">
+			<ref bean="ebPromotionItemDao" />
+		</property>
+	</bean>
+	<bean id="ebProductCellectionService"
+		class="com.ytsp.entrance.service.v5_0.EbProductCellectionService"
+		scope="singleton">
+		<property name="ebProductCollectionDao">
+			<ref bean="ebProductCollectionDao" />
+		</property>
+	</bean>
+</beans>

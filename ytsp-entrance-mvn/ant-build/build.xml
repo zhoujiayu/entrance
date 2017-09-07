@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="ytsp-entrance-build" default="build" basedir=".">
+	
+	<property file="build.properties" />
+	
+	<property name="export.path" value="export" />
+	<property name="dest" value="${export.path}/${product.simplename}" />
+	<property name="dest.webinf" value="${dest}/WEB-INF" />
+	<property name="dest.classes" value="${dest}/WEB-INF/classes" />
+	<property name="dest.webserver" value="${export.path}/webserver" />
+	<property name="config.path" value="resource/config" />
+	<property name="webserver.path" value="resource/webserver" />
+	<!-- as.path为解压后的as的路径 -->
+	<property name="project.path" value="../../ytsp-entrance" />
+	<property name="project.src" value="${project.path}/src/main/java" />
+	<property name="project.webcontent" value="${project.path}/WebContent" />
+	<property name="project.webinf" value="${project.webcontent}/WEB-INF" />
+	<property name="project.lib" value="${project.webinf}/lib" />
+	
+	<tstamp>
+		<format property="build.time" pattern="yyyyMMdd.HHmmss" />
+	</tstamp>
+	
+	<path id="compile.classpath">
+		<fileset dir="resource/lib" />
+		<fileset dir="${project.lib}" />
+	</path>
+	
+	<target name="clean">
+		<delete dir="${export.path}" />
+	</target>
+	
+	<target name="init" depends="clean">
+		<mkdir dir="${export.path}" />
+		<mkdir dir="${dest}" />
+	</target>
+	
+	<target name="copy-webcontent">
+		<copy todir="${dest}" encoding="UTF-8">
+			<fileset dir="${project.webcontent}" >
+				<exclude name="WEB-INF/classes/**" />
+				<exclude name="bk/**" />
+				<exclude name="/**/.svn" />
+			</fileset>
+		</copy>
+		<mkdir dir="${dest.classes}" />
+	</target>
+	
+	<target name="compile">
+		<javac debug="${compile.debug}" debuglevel="${compile.debug.level}" encoding="${compile.encoding}" source="${compile.source}" target="${compile.target}" srcdir="${project.src}" destdir="${dest.classes}">
+			<classpath refid="compile.classpath" />
+			<!-- <exclude name="/test/**/*" /> -->
+		</javac>
+	</target>
+	
+	<target name="copysrcothers">
+		<copy todir="${dest.classes}" encoding="UTF-8" overwrite="true">
+			<fileset dir="${project.src}" >
+				<exclude name="**/*.java" />
+				<exclude name="/**/.svn" />
+			</fileset>
+		</copy>
+		<copy todir="${dest.classes}" encoding="UTF-8" overwrite="true">
+			<fileset dir="${config.path}">
+				<include name="spring-datasource.xml"/>
+				<include name="log4j.xml"/>
+				<exclude name="/**/.svn" />
+			</fileset>
+		</copy>
+		<copy todir="${dest.webinf}" encoding="UTF-8" overwrite="true">
+			<fileset dir="${config.path}">
+				<include name="balance.xml"/>
+				<include name="system.xml"/>
+				<exclude name="/**/.svn" />
+			</fileset>
+		</copy>
+		<copy todir="${dest.classes}" encoding="UTF-8" overwrite="true">
+			<fileset dir="${config.path}">
+				<include name="ali.properties"/>
+				<exclude name="/**/.svn" />
+			</fileset>
+		</copy>
+		<replace file="${dest.classes}/spring-datasource.xml">
+			<replacefilter token="@db_host@" value="${db-host}" />
+			<replacefilter token="@db_username@" value="${db-username}" />
+			<replacefilter token="@db_pwd@" value="${db-pwd}" />
+		</replace>
+		<replace file="${dest.webinf}/balance.xml">
+			<replacefilter token="@mirror1_host@" value="${mirror1-host}" />
+			<replacefilter token="@mirror2_host@" value="${mirror2-host}" />
+		</replace>
+		<replace file="${dest.webinf}/system.xml">
+			<replacefilter token="@host@" value="${entrance-host}" />
+			<replacefilter token="@entrance_host@" value="${entrance-host}" />
+			<replacefilter token="@app_images_path@" value="${app-images-path}" />
+		</replace>
+		<replace file="${dest.classes}/ali.properties">
+			<replacefilter token="@alicallbackBasePath@" value="${alicallbackBasePath}" />
+		</replace>
+	</target>
+	
+	<target name="war">
+		<echo message="Compress to YutongShipin Mirror War"/>
+		<jar jarfile="${export.path}/${product.simplename}.war" basedir="${dest}">
+			<manifest>
+				<attribute name="Product-Name" value="${product.name}" />
+				<attribute name="Product-Version" value="${version}" />
+				<attribute name="Product-Release-Type" value="${product.release.type}" />
+				<attribute name="Product-Release-Date" value="${product.release.date}" />
+				<attribute name="Build-Time" value="${build.time}" />
+				<attribute name="Build-Version" value="${build.version}" />
+				<attribute name="Repository-Version" value="${repository.version}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="unzip">
+		<echo message="Unzip Tomcat Web Server Zip"/>
+		<unzip src="${webserver.path}/apache-tomcat-6.0.32.zip" dest="${dest.webserver}" />
+	</target>
+	
+	<target name="deployWebServer">
+		<copy todir="${dest.webserver}/webapps/${product.simplename}" encoding="UTF-8" overwrite="true">
+			<fileset dir="${dest}">
+				<exclude name="/**/.svn" />
+			</fileset>
+		</copy>
+		<copy file="${config.path}/server.xml" tofile="${dest.webserver}/conf/server.xml" encoding="UTF-8" overwrite="true">
+		</copy>
+		<copy file="${config.path}/catalina.bat" tofile="${dest.webserver}/bin/catalina.bat" encoding="UTF-8" overwrite="true">
+		</copy>
+		<copy file="${config.path}/catalina.sh" tofile="${dest.webserver}/bin/catalina.sh" encoding="UTF-8" overwrite="true">
+		</copy>
+		<copy file="${config.path}/crossdomain.xml" tofile="${dest.webserver}/webapps/ROOT/crossdomain.xml" encoding="UTF-8" overwrite="true">
+		</copy>
+	</target>
+	
+	<target name="zip">
+		<echo message="Compress to Entrance Server Zip"/>
+		<zip destfile="${export.path}/${product.simplename}.zip">
+			<fileset dir="${dest.webserver}" />
+		</zip>
+	</target>
+	
+	<target name="deleteDest">
+		<delete dir="${export.path}" includeemptydirs="true" excludes="*.war,*.zip,*.jar" />
+	</target>
+			
+	<target name="build" depends="init">
+		<echo message="Build YutongShipin Entrance Server"/>
+		
+		<antcall target="init" />
+		<antcall target="copy-webcontent" />
+		<antcall target="compile" />
+		<antcall target="copysrcothers" />
+		<antcall target="war" />
+		<antcall target="unzip" />
+		<antcall target="deployWebServer" />
+		<antcall target="zip" />
+		<antcall target="deleteDest" />
+	</target>
+	
+</project>

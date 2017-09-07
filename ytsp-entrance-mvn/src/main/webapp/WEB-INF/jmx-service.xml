@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <SERVICE CLASS="com.ytsp.entrance.auth.AuthService" 
+  		NAME="ytsp.jmx:name=authService,type=Service" 
+  		DESCRIPTION="YutongShipin auth service">
+  </SERVICE>
+</CONFIG>

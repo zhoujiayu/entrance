@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system>
+	<jmx-service>
+		<!-- <host>@host@</host> -->
+		<host>127.0.0.1</host>
+		<port>10001</port>
+		<protocol>rmi</protocol>
+		<!-- protocol>jmxmp</protocol -->
+	</jmx-service>
+	<img-service>
+		<url>http://@entrance_host@:6080/</url>
+		<savepath>@app_images_path@</savepath>
+	</img-service>
+</system>

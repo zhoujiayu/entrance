@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>ytsp-entrance</display-name>
+  
+   <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter> 
+    
+    
+  <listener>
+    <listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+  </listener>
+  <listener>
+    <listener-class>
+	     		org.springframework.web.context.request.RequestContextListener
+	     </listener-class>
+  </listener>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+			
+			classpath:META-INF/spring-db.xml,
+			classpath:spring-datasource.xml,
+			classpath:spring-service.xml,
+			classpath:spring-session.xml,
+			classpath:spring-mongo.xml
+		</param-value>
+  </context-param>
+  <listener>
+    <listener-class>com.ytsp.entrance.system.SystemInitialization</listener-class>
+  </listener>
+  <listener>
+    <description>sessionListener</description>
+    <listener-class>
+        com.ytsp.entrance.listener.SessionListener
+    </listener-class>
+  </listener>
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>com.ytsp.entrance.servlet.EncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/pay.wtf</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <description>HTTP请求入口</description>
+    <display-name>Entrance</display-name>
+    <servlet-name>Entrance</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.Entrance</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Entrance</servlet-name>
+    <url-pattern>/entrance</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>处理上传</description>
+    <display-name>UploadServlet</display-name>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.UploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/servlet/upload</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description>处理上传</description>
+    <display-name>DmsUploadServlet</display-name>
+    <servlet-name>DmsUploadServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.DmsUploadServlet</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>DmsUploadServlet</servlet-name>
+    <url-pattern>/servlet/uploaddms</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>single endpoint service</description>
+    <display-name>single endpoint service</display-name>
+    <servlet-name>SES</servlet-name>
+    <servlet-class>com.ytsp.entrance.singleton.SingleEndpointPingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SES</servlet-name>
+    <url-pattern>/ses/ping</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>同步系统存于DB的参数</description>
+    <display-name>SystemParamServlet</display-name>
+    <servlet-name>SystemParamServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.SystemParamServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SystemParamServlet</servlet-name>
+    <url-pattern>/servlet/systemparam</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AlipayNotifyReceiveServlet</display-name>
+    <servlet-name>AlipayNotifyReceiveServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.AlipayNotifyReceiveServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlipayNotifyReceiveServlet</servlet-name>
+    <url-pattern>/servlet/alipaynotify/</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>WXNotifyReceiveServlet</display-name>
+    <servlet-name>WXNotifyReceiveServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.WXPayNotifyReceiveServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WXNotifyReceiveServlet</servlet-name>
+    <url-pattern>/servlet/wxpaynotify/</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/e500.jsp</location>
+  </error-page>
+  <servlet>
+    <description></description>
+    <display-name>SingleEndpointUnregServlet</display-name>
+    <servlet-name>SingleEndpointUnregServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.singleton.SingleEndpointUnregServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SingleEndpointUnregServlet</servlet-name>
+    <url-pattern>/SingleEndpointUnregServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description>评论图片上传</description>
+    <display-name>UploadImageServlet</display-name>
+    <servlet-name>UploadImageServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.CommentImagesUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadImageServlet</servlet-name>
+    <url-pattern>/servlet/uploadImage</url-pattern>
+  </servlet-mapping>
+  
+  
+    <servlet>
+    <description>崩溃日志上传</description>
+    <display-name>UploadExceptionServlet</display-name>
+    <servlet-name>UploadExceptionServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.ExceptionLogUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadExceptionServlet</servlet-name>
+    <url-pattern>/uploadExceptionLog</url-pattern>
+  </servlet-mapping>
+  
+  
+   <servlet>
+    <description>查看崩溃日志文件</description>
+    <display-name>GetExceptionServlet</display-name>
+    <servlet-name>GetExceptionServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.ExceptionLogContentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetExceptionServlet</servlet-name>
+    <url-pattern>/getExceptionLog</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description>获取专辑数据</description>
+    <display-name>AlbumQueryServlet</display-name>
+    <servlet-name>AlbumQueryServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.AlbumQueryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlbumQueryServlet</servlet-name>
+    <url-pattern>/servlet/albumQuery</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description>获取验证码图处</description>
+    <display-name>ValidateImageServlet</display-name>
+    <servlet-name>ValidateImageServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.ValidateImageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ValidateImageServlet</servlet-name>
+    <url-pattern>/validateImage</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description>获取专辑某一集视频</description>
+    <display-name>VideoQueryServlet</display-name>
+    <servlet-name>VideoQueryServlet</servlet-name>
+    <servlet-class>com.ytsp.entrance.servlet.VideoQueryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VideoQueryServlet</servlet-name>
+    <url-pattern>/servlet/videoQuery</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>  
+        <servlet-name>rest</servlet-name>  
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+        <init-param>  
+            <param-name>contextConfigLocation</param-name>  
+            <param-value>classpath:spring-servlet.xml</param-value>  
+        </init-param>  
+        <load-on-startup>1</load-on-startup>  
+    </servlet>  
+  
+    <servlet-mapping>  
+        <servlet-name>rest</servlet-name>  
+        <url-pattern>/rest/*</url-pattern>  
+    </servlet-mapping>   
+  
+  	<filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/data/*</url-pattern>
+    </filter-mapping>
+ 
+	<session-config>    
+	    <session-timeout>30</session-timeout>      
+	</session-config>  
+	
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  
+  <filter>
+    	<!-- utf-8 编码处理 -->  
+        <filter-name>Character Encoding</filter-name>  
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>  
+        <init-param>  
+            <param-name>encoding</param-name>  
+            <param-value>UTF-8</param-value>  
+        </init-param>  
+    </filter>  
+    <filter-mapping>  
+        <filter-name>Character Encoding</filter-name>  
+        <url-pattern>/</url-pattern>  
+    </filter-mapping>
+  
+</web-app>

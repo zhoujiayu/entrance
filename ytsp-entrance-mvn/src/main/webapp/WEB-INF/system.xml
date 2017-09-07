@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system>
+	<jmx-service>
+		<!-- <host>114.112.50.215</host> -->
+		<host>127.0.0.1</host>
+		<port>10001</port>
+		<protocol>rmi</protocol>
+		<!-- protocol>jmxmp</protocol -->
+	</jmx-service>
+	<img-service>
+		<url>http://webimg.ikan.cn/</url>
+		<savepath>/home/imagemedia/www</savepath>
+	</img-service>
+	<master>1</master>
+</system>

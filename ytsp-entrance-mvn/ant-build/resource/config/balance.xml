@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<balance-net>
+	<!-- jmxProtocol="jmxmp" -->
+	<node jmxHost="@mirror1_host@" jmxPort="10001" jmxProtocol="rmi" jmxObjectName="ytsp.jmx:name=mirrorBalanceService,type=Service">
+		<data>
+			<prop key="service" value="http://@mirror1_host@:8080/res/" />
+		</data>
+	</node>
+	<node jmxHost="@mirror2_host@" jmxPort="10001" jmxProtocol="rmi" jmxObjectName="ytsp.jmx:name=mirrorBalanceService,type=Service">
+		<data>
+			<prop key="service" value="http://@mirror2_host@:8080/res/" />
+		</data>
+	</node>
+</balance-net> 

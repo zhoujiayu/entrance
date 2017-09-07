@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd"> 
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%p] %d{yyyy-MM-dd HH:mm:ss} [%l] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="FILE"
+		class="org.apache.log4j.rolling.RollingFileAppender">
+		<!--<param name="File" value="D:/export/logs/ytsp-entrance/ytsp-entrance.%d{yyyy-MM-dd-HH}.log" />-->
+		<rollingPolicy  
+               class="org.apache.log4j.rolling.TimeBasedRollingPolicy">  
+               <param name="FileNamePattern"  
+                    value="/export/logs/ytsp-entrance/ytsp-entrance.%d{yyyy-MM-dd}.log" />  
+        </rollingPolicy>  
+		<param name="Append" value="true" />
+		<param name="ImmediateFlush" value="true" />
+		<param name="MaxFileSize" value="1000KB" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] %d{yyyy-MM-dd HH:mm:ss} [%l] %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelMatchFilter">
+			<param name="LevelToMatch" value="ERROR" />
+		</filter>
+	</appender>
+	
+	<appender name="ALIPAY"
+		class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="ytsp-entrance-pay.log" />
+		<param name="Append" value="true" />
+		<param name="ImmediateFlush" value="true" />
+		<param name="MaxFileSize" value="10000KB" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] %d{yyyy-MM-dd HH:mm:ss} [%l] %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelMatchFilter">
+			<param name="LevelToMatch" value="ERROR" />
+		</filter>
+	</appender>
+	
+	<logger name="com.ytsp.entrance.servlet" additivity="false">
+	    <level value="INFO" />
+	    <appender-ref ref="ALIPAY" />
+	    <appender-ref ref="FILE" />
+	</logger>
+	
+	<root>
+		<!-- level value="DEBUG" / -->
+		<level value="INFO" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</log4j:configuration>
